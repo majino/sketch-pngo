@@ -4,7 +4,7 @@
   "author": "Marian Mraz",
   "authorEmail": "marian@mraz.me",
   "version": "0.0.1",
-  "identifier": "com.sketchapp.plugins.pngo",
+  "identifier": "com.majino.sketchplugins.pngo",
   "commands" : [
     {
       "name": "PNGO Export",

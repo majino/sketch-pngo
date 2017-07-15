@@ -15,7 +15,7 @@ function onExportSlices(context){
     // When we find an asset in PNG format, then we'll want to compress the folder it's been exported to.
     if (currentExport.request.format() == 'png') {
       shouldCompressPNG = true
-      var currentPath = "" + currentExport.path
+      var currentPath = String(currentExport.path)
       pathsToCompress.push(currentPath)
     }
   }
@@ -51,13 +51,8 @@ function optimizeFolderWithPNGO(filePath, scriptPath) {
   var args = [
     "-l",
     "-c",
-    "cd " + scriptPath + "/",
-    "./pngquant '" + filePath + "' --ext=.png --force --skip-if-larger",
-    "./pngcrush -ow '" + filePath + "'",
-    "./optipng '" + filePath + "' -force"
-    // "cd " + scriptPath + "/ && ./pngquant '" + filePath + "' --ext=.png --force --skip-if-larger && ./pngcrush -ow '" + filePath + "' && ./optipng '" + filePath + "' -force"
+    "cd " + scriptPath + "/ && ./compression.sh " + filePath
   ]
-  log(args)
   return runCommand("/bin/bash", args)
 }
 
@@ -82,6 +77,5 @@ function runCommand(command, args) {
   task.arguments = args;
   task.launch();
   task.waitUntilExit();
-  log('Reason: ' + task.terminationReason() + ' Code: ' + task.terminationStatus())
   return (task.terminationStatus() == 0)
 }
