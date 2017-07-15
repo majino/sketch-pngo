@@ -1,5 +1,4 @@
 #! /bin/bash
-
 if [[ $# -eq 0 ]] ; then
     echo 'Error: No argument supplied'
     exit 1
