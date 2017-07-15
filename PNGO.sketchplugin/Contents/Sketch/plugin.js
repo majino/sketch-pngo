@@ -56,7 +56,7 @@ function optimizeFolderWithPNGO(filePath, scriptPath) {
 
 // Utility function to play a given system sound.
 function playSystemSound(sound) {
-  
+
   // The command line tool `afplay` does what we need - we just have to call it
   // with the full path of a system sound.
   runCommand("/usr/bin/afplay", ["/System/Library/Sounds/" + sound + ".aiff"])
