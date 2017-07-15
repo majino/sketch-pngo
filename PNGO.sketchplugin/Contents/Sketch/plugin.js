@@ -12,7 +12,8 @@ function onExportSlices(context){
   // We'll take a look at the Array that contains all the exported assets…
   for (var i=0; i < exports.count(); i++) {
     var currentExport = exports.objectAtIndex(i)
-    // When we find an asset in PNG format, then we'll want to compress the folder it's been exported to.
+
+    // When we find an asset in PNG format, we add it to the list
     if (currentExport.request.format() == 'png') {
       shouldCompressPNG = true
       var currentPath = String(currentExport.path)
@@ -20,10 +21,9 @@ function onExportSlices(context){
     }
   }
 
-  // Time to compress some folders
   if (shouldCompressPNG) {
 
-    // Let's remove duplicates so that we only compress each one once.
+    // Let's remove duplicates so that we only compress each asset only once
     var paths = uniqueArray(pathsToCompress),
         success = true
 
@@ -31,18 +31,13 @@ function onExportSlices(context){
     for (var p=0; p < paths.length; p++) {
       var path = paths[p]
       log('Compressing ' + paths.length + ' PNG file(s)')
-      // ...doing the export, and log the result to the console
       if(optimizeFolderWithPNGO(paths[p], escapedPath)) {
-        log('✅ compression ok')
+        log('Compression success ✅')
       } else {
-        log('❌ compression error')
+        log('Compression error ❌')
         success = false
       }
     }
-
-    // Finally, make some noise to let the user know that we're done, and if everything went according to plan.
-    //
-    // The compression can take a while if you're exporting many assets, so it's a nice touch :-)
     playSystemSound(success ? "Glass" : "Basso")
   }
 }
@@ -51,6 +46,9 @@ function optimizeFolderWithPNGO(filePath, scriptPath) {
   var args = [
     "-l",
     "-c",
+
+    // Run the compression script, you can tweak the compression settings in the
+    // [compression.sh] script file
     "cd " + scriptPath + "/ && ./compression.sh " + filePath
   ]
   return runCommand("/bin/bash", args)
@@ -58,8 +56,9 @@ function optimizeFolderWithPNGO(filePath, scriptPath) {
 
 // Utility function to play a given system sound.
 function playSystemSound(sound) {
-  // The command line tool `afplay` does what we need - we just have to call it with the full path
-  // of a system sound.
+  
+  // The command line tool `afplay` does what we need - we just have to call it
+  // with the full path of a system sound.
   runCommand("/usr/bin/afplay", ["/System/Library/Sounds/" + sound + ".aiff"])
 }
 
