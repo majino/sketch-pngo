@@ -1,0 +1,1 @@
+"cd " + scriptPath + "/ && ./pngquant '" + filePath + "' --ext=.png --force --skip-if-larger && ./pngcrush -ow '" + filePath + "' && ./optipng '" + filePath + "' -force"
