@@ -1,0 +1,20 @@
+{
+  "name": "PNGO",
+  "description": "Sketch plugin that compresses PNG assets using pngquant2",
+  "author": "Marian Mraz",
+  "authorEmail": "marian@mraz.me",
+  "version": "0.0.1",
+  "identifier": "com.majino.sketchplugins.pngo",
+  "commands" : [
+    {
+      "name": "PNGO Export",
+      "identifier": "pngo",
+      "script": "plugin.js",
+      "handlers": {
+        "actions": {
+          "ExportSlices": "onExportSlices"
+        }
+      },
+    }
+  ],
+}
