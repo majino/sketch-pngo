@@ -1,5 +1,7 @@
 function onExportSlices(context){
 
+  var sketch = context.api()
+
   // Get the path to the script
   var scriptPath = context.scriptPath
   var pluginRoot = [scriptPath stringByDeletingLastPathComponent]
@@ -33,11 +35,13 @@ function onExportSlices(context){
       log('Compressing ' + paths.length + ' PNG file(s)')
       if(optimizeFolderWithPNGO(paths[p], escapedPath)) {
         log('Compression success ✅')
+        sketch.message('Compression success.')
       } else {
         log('Compression error ❌')
         success = false
       }
     }
+
     playSystemSound(success ? "Glass" : "Basso")
   }
 }
